@@ -91,12 +91,14 @@ public class AdminController {
 
     @GetMapping("/addUser")
     public String viewAddUSerForm(Model model) {
-        model.addAttribute("user", new Employee() );
+        model.addAttribute("employee", new Employee());
         return "AdminAddUser";
     }
 
     @PostMapping("/addUser")
     public String addUserByAdmin(@Valid Employee employee, BindingResult result, Model model) {
+        
+        
         if (result.hasErrors()) {
             return "AdminAddUser";
         }

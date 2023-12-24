@@ -46,7 +46,7 @@ public class UserDetail implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getroles());
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getroles().toString());
         authorities.add(authority);
         return authorities;
     }
@@ -111,13 +111,20 @@ public class UserDetail implements UserDetails {
         
     }
 
-    public String getroles() {
+    public Roles getroles() {
     
+        
         if(user == null) {
-    
-            return emp.getRoles();
+            if(emp.getRoles().equals("CHEF")){return  Roles.CHEF;}
+           else {return  Roles.CHEF;}
+           
         }else{
-            return user.getRoles();
+            if(user.getRoles().equals("ADMIN") ) {
+                return  Roles.ADMIN;
+            }else{
+                return Roles.USER;
+            }
+            
         
         
         }

@@ -14,7 +14,7 @@ public class Customer extends User {
     public Customer() {
 
         super();
-        this.setRoles("USER");
+//        this.setRoles("USER");
     }
 
 }

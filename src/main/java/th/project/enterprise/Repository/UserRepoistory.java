@@ -17,6 +17,7 @@ public interface UserRepoistory extends CrudRepository<User, Long> {
 
     @Query("SELECT m FROM Customer m WHERE m.roles not LIKE %:role%")
     List<Customer> getAllCustomer(String role);
+   
     @Modifying
     @Query("update Customer u set u.adress=:adress where u.id=:uid")
     void updateUserAdreesID(Adress adress, long uid);

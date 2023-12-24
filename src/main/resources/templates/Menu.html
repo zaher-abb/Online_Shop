@@ -24,17 +24,17 @@
             <li class="nav-item active" sec:authorize="isAuthenticated()">
                 <!--                <a class="nav-link active" th:href="@{/Admin/viewAdminPage}">edit Menu</a>-->
 
-                <a class="nav-link active" th:href="@{/Menu/all}">edit Menu</a>
+                <a sec:authorize="hasAnyRole('ADMIN','CHEF')" class="nav-link active" th:href="@{/Menu/all}">edit Menu</a>
 
             </li>
-            <li sec:authorize="isAuthenticated()" class="nav-item mr-10">
+            <li sec:authorize="hasAnyRole('ADMIN')"  class="nav-item mr-10">
                 <a class="nav-link active">process Order</a>
             </li>
-            <li sec:authorize="hasRole('ADMIN')" class="nav-item active" >
+            <li sec:authorize="hasAnyRole('ADMIN')" class="nav-item active" >
                 <a class="nav-link active" th:href="@{/User/all}" >manage staff</a>
 
             </li>
-            <li sec:authorize="hasRole('ADMIN')"  class="nav-item mr-10">
+            <li sec:authorize="hasAnyRole('ADMIN')" class="nav-item mr-10">
                 <a class="nav-link active">manage customer</a>
             </li>
 

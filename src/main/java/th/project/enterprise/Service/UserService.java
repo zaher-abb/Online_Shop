@@ -18,37 +18,42 @@ import java.util.List;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private UserRepoistory userRepoistory;
+    private UserRepoistory userRepository;
 
 
     public void creatUser(Customer user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepoistory.save(user);
+        userRepository.save(user);
     }
-    public void creatUser(User user) {
+    public void creatUser(Employee employee) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepoistory.save(user);
+        employee.setPassword(encoder.encode(employee.getPassword()));
+    
+        userRepository.save(employee);
     }
 
     public Customer findByEmail(String email) {
-        return userRepoistory.getUserByEmail(email);
+        return userRepository.getUserByEmail(email);
+    }
+    public Employee findEmpByEmail(String email) {
+        return userRepository.getEmpByEmail(email);
     }
     public User findUserByEmail(String email) {
-        return userRepoistory.getUserByEmail(email);
+        return userRepository.getUserByEmail(email);
     }
 
     public boolean isCustomerPresent(String email) {
-        Customer user = userRepoistory.getUserByEmail(email);
+        Customer user = userRepository.getUserByEmail(email);
         if (user != null) {
             return true;
         }
         return false;
     }
     public boolean isUserPresent(String email) {
-        User user = userRepoistory.getUserByEmail(email);
-        if (user != null) {
+        User user = userRepository.getUserByEmail(email);
+        User emp = userRepository.getEmpByEmail(email);
+        if (user != null || emp != null) {
             return true;
         }
         return false;
@@ -56,8 +61,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Customer user = userRepoistory.getUserByEmail(s);
-        Employee emp = userRepoistory.getEmpByEmail(s);
+        Customer user = userRepository.getUserByEmail(s);
+        Employee emp = userRepository.getEmpByEmail(s);
         UserDetail userDetails;
         if (user == null && emp == null) {
             throw new UsernameNotFoundException("user not exits with this name");
@@ -77,21 +82,22 @@ public class UserService implements UserDetailsService {
 
 
     public void updateUserAdreesID(Adress adress, long uid) {
-        userRepoistory.updateUserAdreesID(adress, uid);
+        userRepository.updateUserAdreesID(adress, uid);
     }
 
     public List<Customer> getAllCustomer() {
-        return userRepoistory.getAllCustomer("ADMIN");
+        return userRepository.getAllCustomer("ADMIN");
     }
+   
     
     public List<Employee> getAllEmployees() {
 
-      return  userRepoistory.getAllEmployees();
+      return  userRepository.getAllEmployees();
     }
     
     public void removeEmployee(long id) {
         
-        userRepoistory.deleteEmployeeById(id);
+        userRepository.deleteEmployeeById(id);
     }
 }
 

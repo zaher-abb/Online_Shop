@@ -13,6 +13,8 @@ public class Employee extends User {
     protected float salary;
     protected int vacationDays;
     protected float workingHours;
+    
+  
 
     public Employee() {
         super();
