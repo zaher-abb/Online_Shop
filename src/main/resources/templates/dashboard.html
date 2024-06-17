@@ -1,0 +1,65 @@
+<!-- dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Rankings Dashboard</title>
+    <style>
+        /* CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<h1>Team Rankings</h1>
+<table id="team-rankings">
+    <thead>
+    <tr>
+        <th>Rank</th>
+        <th>Team Name</th>
+        <th>Points</th>
+    </tr>
+    </thead>
+    <tbody id="team-rankings-body">
+    <!-- team ranking data will be rendered here -->
+    </tbody>
+</table>
+
+<script>
+    // JavaScript code here
+    const teamRankings = [
+        { rank: 1, name: "Team A", points: 100 },
+        { rank: 2, name: "Team B", points: 80 },
+        { rank: 3, name: "Team C", points: 60 },
+        // add more teams here
+    ];
+
+    const tableBody = document.getElementById("team-rankings-body");
+    teamRankings.forEach((team) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                <td>${team.rank}</td>
+                <td>${team.name}</td>
+                <td>${team.points}</td>
+            `;
+        tableBody.appendChild(row);
+    });
+</script>
+</body>
+</html>

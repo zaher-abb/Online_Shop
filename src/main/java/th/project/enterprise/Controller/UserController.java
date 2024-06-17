@@ -1,11 +1,15 @@
 package th.project.enterprise.Controller;
 
+import org.springframework.web.bind.annotation.RequestParam;
+import th.project.enterprise.Entity.Steps;
 import th.project.enterprise.Entity.User;
 import th.project.enterprise.Entity.Adress;
 import th.project.enterprise.Repository.AdressRepository;
+import th.project.enterprise.Repository.StepsRepository;
 import th.project.enterprise.Service.AdressService;
 
 import th.project.enterprise.Service.EmailService;
+import th.project.enterprise.Service.StepsService;
 import th.project.enterprise.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -34,9 +38,8 @@ public class UserController {
     @Autowired
     AdressService adressService;
 
-
     @Autowired
-    AdressRepository adressRepository;
+    StepsService stepsService;
 
     @GetMapping("/register")
     public String viewRgisterPage(Model model) {
@@ -65,11 +68,12 @@ public class UserController {
     }
 
     @GetMapping("/default")
-    public String defaultAfterLogin(HttpServletRequest request) {
+    public String defaultAfterLogin(HttpServletRequest request, Model model) {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/Admin/viewAdminPage";
         }
-        return "redirect:/Product/Home";
+        model.addAttribute("stp", new Steps());
+        return "addSteps";
     }
 
     @GetMapping("/login")
@@ -79,8 +83,25 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout() {
+
         return "redirect:/Product/Home";
     }
+
+    @PostMapping("/addSteps")
+    public String addSteps(@Valid Steps stp , Principal principal) {
+
+        User user1 = userService.findByEmail(principal.getName());
+        if (user1 == null) {
+            return "redirect:/User/logout";
+        } else {
+
+            stp.setUser(user1);
+            stepsService.addNewSteps(stp);
+            return "main";
+        }
+
+    }
+
 
     @GetMapping("/showUserProfile")
     public String showUserProfile(Principal principal, Model model) {

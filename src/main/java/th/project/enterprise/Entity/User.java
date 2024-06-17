@@ -26,9 +26,11 @@ public class User {
 
     private String roles;
 
+
     @NotNull
     @Size(min = 4)
     private String password;
+
 
     @NotNull
     @Column(nullable = false, unique = true)

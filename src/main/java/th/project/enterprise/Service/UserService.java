@@ -1,6 +1,9 @@
 package th.project.enterprise.Service;
 
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import th.project.enterprise.Entity.Adress;
+import th.project.enterprise.Entity.Steps;
 import th.project.enterprise.Entity.User;
 import th.project.enterprise.Entity.UserDetail;
 import th.project.enterprise.Repository.UserRepoistory;
@@ -55,6 +58,7 @@ public class UserService implements UserDetailsService {
     public void updateUserAdreesID(Adress adress, long uid) {
         userRepoistory.updateUserAdreesID(adress, uid);
     }
+
 
 }
 

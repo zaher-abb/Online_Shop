@@ -1,14 +1,17 @@
 package th.project.enterprise.Controller;
 
 import th.project.enterprise.Entity.Product;
+import th.project.enterprise.Entity.User;
 import th.project.enterprise.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import th.project.enterprise.Service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -17,6 +20,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/Home")
     public String showHomePage(Model model) {
@@ -27,18 +33,18 @@ public class ProductController {
         return "main";
     }
 
-    @GetMapping("/search")
-    public String search(Model model, @Param("search") String search, HttpServletRequest request) {
-        if (request.isUserInRole("ROLE_ADMIN")) {
-            List<Product> products = productService.getProductByName(search);
-            model.addAttribute("p1", products);
-            return "AdminSeite";
-        } else {
-            List<Product> products = productService.getProductByName(search);
-            model.addAttribute("p1", products);
-            return "main";
-        }
-    }
+//    @GetMapping("/search")
+//    public String search(@RequestParam(value = "search", required = false) Integer steps , Principal principal) {
+//
+//        User user1 = userService.findByEmail(principal.getName());
+//        if (user1 == null) {
+//            return "redirect:/User/logout";
+//        } else {
+//            userService.updateUserSteps(steps,user1.getId());
+//            return "main";
+//        }
+//
+//    }
 
     @GetMapping("/laptops")
     public String Laptops(Model model) {
