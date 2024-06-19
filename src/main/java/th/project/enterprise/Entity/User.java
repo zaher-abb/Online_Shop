@@ -50,7 +50,7 @@ public class User {
         setRoles("USER");
     }
 
-
+    private long stepsTarget;
     public void setAdress(Adress adress) {
         this.adress = adress;
     }

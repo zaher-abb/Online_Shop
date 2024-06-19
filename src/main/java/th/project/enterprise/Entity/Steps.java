@@ -1,11 +1,8 @@
 package th.project.enterprise.Entity;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import java.time.LocalDate;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Setter
@@ -20,9 +17,8 @@ public class Steps {
     private long stepsID;
 
     private int steps_number;
-
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date date;
+    private String stringDate;
+    private LocalDate date;
 
 
     @ManyToOne(fetch = FetchType.EAGER)

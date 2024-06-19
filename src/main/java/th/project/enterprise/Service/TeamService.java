@@ -1,9 +1,14 @@
 package th.project.enterprise.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import th.project.enterprise.Entity.Team;
+import th.project.enterprise.Entity.User;
 import th.project.enterprise.Repository.TeamRepository;
+import th.project.enterprise.Repository.UserRepoistory;
+
+import java.util.List;
 
 @Service
 public class TeamService {
@@ -29,6 +34,11 @@ public class TeamService {
     public Team getTeamByName(String team) {
         return teamRepository.findByTeamName(team);
     }
+
+//    public List<User> getAllUsersInTeam(Team team){
+//        return teamRepository.getAllUserInTeam(team);
+//
+//    }
 
 
 }

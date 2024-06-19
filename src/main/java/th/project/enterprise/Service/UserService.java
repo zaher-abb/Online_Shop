@@ -1,7 +1,6 @@
 package th.project.enterprise.Service;
 
 import th.project.enterprise.Entity.*;
-import th.project.enterprise.Repository.TeamRepository;
 import th.project.enterprise.Repository.UserRepoistory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 
 @Transactional
 @Service
@@ -20,9 +20,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepoistory userRepoistory;
 
-    @Autowired
-    private TeamRepository teamRepository;
-
+//    @Autowired
+//    private TeamRepository teamRepository;
+//
 
 
     public void creatUser(User user) {
@@ -44,6 +44,16 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public int getNumberOfStepsByDay(long userId, LocalDate dateStr) {
+
+        return userRepoistory.getUserStepsSumByDate(userId, dateStr);
+    }
+
+    public int getNumberOfStepsByDifference(long userId, LocalDate startDate, LocalDate endDate) {
+
+        return userRepoistory.getUSerStepsByDifference(userId, startDate, endDate);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepoistory.getUserByEmail(s);
@@ -59,9 +69,6 @@ public class UserService implements UserDetailsService {
         userRepoistory.updateUserAdreesID(adress, uid);
     }
 
-    public void addTeamToUser(Team team, long uid) {
-        userRepoistory.updateUserTeam(team, uid);
-    }
 
 }
 

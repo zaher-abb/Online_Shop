@@ -1,13 +1,13 @@
 package th.project.enterprise.Repository;
 
 import th.project.enterprise.Entity.Adress;
-import th.project.enterprise.Entity.Steps;
-import th.project.enterprise.Entity.Team;
 import th.project.enterprise.Entity.User;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+
+import java.time.LocalDate;
 
 public interface UserRepoistory extends CrudRepository<User, Long> {
 
@@ -17,8 +17,8 @@ public interface UserRepoistory extends CrudRepository<User, Long> {
     @Modifying
     @Query("update User u set u.adress=:adress where u.id=:uid")
     void updateUserAdreesID(Adress adress, long uid);
-
-    @Modifying
-    @Query("update User u set u.team=:team where u.id=:uid")
-    void updateUserTeam(Team team, long uid);
+    @Query("SELECT SUM(s.steps_number) FROM Steps s WHERE s.user.id= :id AND s.date = :d")
+    int getUserStepsSumByDate(long id, LocalDate d);
+    @Query("SELECT SUM(s.steps_number) FROM Steps s WHERE s.user.id= :userId AND s.date BETWEEN :startDate AND :endDate")
+    int getUSerStepsByDifference(long userId, LocalDate startDate, LocalDate endDate);
 }
