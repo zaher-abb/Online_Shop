@@ -1,16 +1,11 @@
 package th.project.enterprise.Controller;
 
-import org.springframework.web.bind.annotation.RequestParam;
 import th.project.enterprise.Entity.Steps;
+import th.project.enterprise.Entity.Team;
 import th.project.enterprise.Entity.User;
 import th.project.enterprise.Entity.Adress;
-import th.project.enterprise.Repository.AdressRepository;
-import th.project.enterprise.Repository.StepsRepository;
-import th.project.enterprise.Service.AdressService;
+import th.project.enterprise.Service.*;
 
-import th.project.enterprise.Service.EmailService;
-import th.project.enterprise.Service.StepsService;
-import th.project.enterprise.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
@@ -41,6 +36,9 @@ public class UserController {
     @Autowired
     StepsService stepsService;
 
+    @Autowired
+    TeamService teamService;
+
     @GetMapping("/register")
     public String viewRgisterPage(Model model) {
         model.addAttribute("user", new User());
@@ -56,12 +54,23 @@ public class UserController {
             model.addAttribute("exist", true);
             return "register";
         }
+
+        String teamName = user.getTeamName().toLowerCase();
+
+        if (teamService.chechTeamIsAlreadyExisted(teamName)){
+            Team t = teamService.getTeamByName(teamName);
+            userService.addTeamToUser(t,user.getId());
+        }
+        else {
+            teamService.addNewTeam(teamName);
+            Team t = teamService.getTeamByName(teamName);
+            userService.addTeamToUser(t,user.getId());
+        }
         userService.creatUser(user);
         model.addAttribute("success", true);
         try {
-            //       emailService.registrationConfirmationEmail(user);
+          //  emailService.registrationConfirmationEmail(user);
         } catch (MailException ignored) {
-
 
         }
         return "login";

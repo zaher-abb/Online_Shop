@@ -171,6 +171,13 @@
 							<input type="text" name="lastname" th:field="*{lastName}">
 							<div class="ext text-danger"  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" ></div>
 						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
+							</div>
+							<input type="text" name="teamName" th:field="*{teamName}">
+							<div class="ext text-danger"  th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}" ></div>
+						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
@@ -215,8 +222,9 @@
 		var form_fields = document.getElementsByTagName('input')
 		form_fields[1].placeholder='First Name...';
 		form_fields[2].placeholder='Last Name...';
-		form_fields[3].placeholder='Email..';
-		form_fields[4].placeholder='Enter password...';
+		form_fields[3].placeholder='Team ...';
+		form_fields[4].placeholder='Email..';
+		form_fields[5].placeholder='Enter password...';
 
 
 

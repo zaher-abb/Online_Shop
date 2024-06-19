@@ -24,7 +24,17 @@ public class User {
     @JoinColumn(name = "adress_id")
     private Adress adress;
 
+    private String teamName;
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+
     private String roles;
+
 
 
     @NotNull

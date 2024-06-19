@@ -1,11 +1,7 @@
 package th.project.enterprise.Service;
 
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import th.project.enterprise.Entity.Adress;
-import th.project.enterprise.Entity.Steps;
-import th.project.enterprise.Entity.User;
-import th.project.enterprise.Entity.UserDetail;
+import th.project.enterprise.Entity.*;
+import th.project.enterprise.Repository.TeamRepository;
 import th.project.enterprise.Repository.UserRepoistory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +19,10 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepoistory userRepoistory;
+
+    @Autowired
+    private TeamRepository teamRepository;
+
 
 
     public void creatUser(User user) {
@@ -59,6 +59,9 @@ public class UserService implements UserDetailsService {
         userRepoistory.updateUserAdreesID(adress, uid);
     }
 
+    public void addTeamToUser(Team team, long uid) {
+        userRepoistory.updateUserTeam(team, uid);
+    }
 
 }
 

@@ -2,6 +2,7 @@ package th.project.enterprise.Repository;
 
 import th.project.enterprise.Entity.Adress;
 import th.project.enterprise.Entity.Steps;
+import th.project.enterprise.Entity.Team;
 import th.project.enterprise.Entity.User;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,6 +18,7 @@ public interface UserRepoistory extends CrudRepository<User, Long> {
     @Query("update User u set u.adress=:adress where u.id=:uid")
     void updateUserAdreesID(Adress adress, long uid);
 
-
-
+    @Modifying
+    @Query("update User u set u.team=:team where u.id=:uid")
+    void updateUserTeam(Team team, long uid);
 }
