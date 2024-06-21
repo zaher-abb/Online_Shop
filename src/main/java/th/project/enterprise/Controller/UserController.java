@@ -44,17 +44,17 @@ public class UserController {
     @GetMapping("/register")
     public String viewRgisterPage(Model model) {
         model.addAttribute("user", new User());
-        return "register";
+        return "signup";
     }
 
     @PostMapping("/register")
     public String Register(@Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "register";
+            return "signup";
         }
         if (userService.isUserPresent(user.getEmail())) {
             model.addAttribute("exist", true);
-            return "register";
+            return "signup";
         }
 
         String teamName = user.getTeamName().toLowerCase();
@@ -74,7 +74,7 @@ public class UserController {
         userService.creatUser(user);
         model.addAttribute("success", true);
         try {
-          //  emailService.registrationConfirmationEmail(user);
+//           emailService.registrationConfirmationEmail(user);
         } catch (MailException ignored) {
 
         }
@@ -82,18 +82,13 @@ public class UserController {
     }
 
     @GetMapping("/default")
-    public String defaultAfterLogin(HttpServletRequest request, Model model) {
+    public String defaultAfterLogin(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/Admin/viewAdminPage";
         }
-        model.addAttribute("stp", new Steps());
+
         return "addSteps";
     }
-
-//    @GetMapping("/allUserInTeam")
-//    public User getAllUserInfoInTeam(Principal principal) {
-//        userService.
-//    }
 
     @GetMapping("/login")
     public String login() {
@@ -122,7 +117,7 @@ public class UserController {
             stp.setDate(localDate);
 
             stepsService.addNewSteps(stp);
-            return "main";
+            return "index";
         }
 
     }

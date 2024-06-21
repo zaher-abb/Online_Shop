@@ -16,7 +16,6 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-/*
     public void registrationConfirmationEmail(User user) throws MailException {
 
         SimpleMailMessage mail = new SimpleMailMessage();
@@ -29,8 +28,6 @@ public class EmailService {
         javaMailSender.send(mail);
     }
 
- */
-/*
     public void userEmailToAdmin(User user, String text, String s) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo("zaher.abb12@gmail.com");
@@ -41,8 +38,7 @@ public class EmailService {
         javaMailSender.send(mail);
 
     }
-    */
-/*
+
     public void orderConfirmationEmail(User user, LocalDateTime DelevieryDate) throws MailException {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(user.getEmail());
@@ -53,6 +49,5 @@ public class EmailService {
         mail.setSubject("Order Confirmation ");
         javaMailSender.send(mail);
     }
-*/
 
 }
