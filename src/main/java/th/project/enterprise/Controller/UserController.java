@@ -1,9 +1,6 @@
 package th.project.enterprise.Controller;
 
-import th.project.enterprise.Entity.Steps;
-import th.project.enterprise.Entity.Team;
-import th.project.enterprise.Entity.User;
-import th.project.enterprise.Entity.Adress;
+import th.project.enterprise.Entity.*;
 import th.project.enterprise.Service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +83,6 @@ public class UserController {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/Admin/viewAdminPage";
         }
-
         return "addSteps";
     }
 
@@ -101,46 +97,21 @@ public class UserController {
         return "redirect:/Product/Home";
     }
 
-    @PostMapping("/addSteps")
-    public String addSteps(@Valid Steps stp , Principal principal) {
-
+    @GetMapping("/teamsRank")
+    public String getTeamRank(Model model){
+        model.addAttribute("steps",stepsService.getStepsSumByTeam());
+        return "dashboard_test";
+    }
+    @GetMapping("/userRank")
+    public String getUserRank(Model model, Principal principal){
         User user1 = userService.findByEmail(principal.getName());
-        if (user1 == null) {
-            return "redirect:/User/logout";
-        } else {
-
-            String dateString = stp.getStringDate();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate localDate = LocalDate.parse(dateString, formatter);
-            stp.setUser(user1);
-            stp.setDate(localDate);
-
-            stepsService.addNewSteps(stp);
-            return "index";
-        }
-
+        model.addAttribute("steps",stepsService.getStepsSumByUserInTeam(user1.getTeam().getId()));
+        return "dashboard_test";
     }
 
-    @GetMapping("/steps/today")
-    public String getNumberOfStepsByDay(Principal principal, Model model){
-        LocalDate today = LocalDate.now();
-        User user1 = userService.findByEmail(principal.getName());
-        int stepsSum = userService.getNumberOfStepsByDay(user1.getId(), today);
-        model.addAttribute("steps",stepsSum);
-        return "dashboard";
-    }
-    @GetMapping("/steps/week")
-    public String getNumberOfStepsByWeek(Principal principal, Model model){
-        LocalDate startDay = LocalDate.now();
-        LocalDate endDay = LocalDate.now().plusDays(7);
 
-        User user1 = userService.findByEmail(principal.getName());
-        int stepsSum = userService.getNumberOfStepsByDifference(user1.getId(), startDay,endDay);
 
-        model.addAttribute("steps",stepsSum);
-        return "dashboard";
-    }
+
 
 
     @GetMapping("/showUserProfile")

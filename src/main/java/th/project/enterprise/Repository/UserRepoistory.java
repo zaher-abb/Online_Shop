@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface UserRepoistory extends CrudRepository<User, Long> {
 
@@ -21,4 +22,6 @@ public interface UserRepoistory extends CrudRepository<User, Long> {
     int getUserStepsSumByDate(long id, LocalDate d);
     @Query("SELECT SUM(s.steps_number) FROM Steps s WHERE s.user.id= :userId AND s.date BETWEEN :startDate AND :endDate")
     int getUSerStepsByDifference(long userId, LocalDate startDate, LocalDate endDate);
+
+
 }
