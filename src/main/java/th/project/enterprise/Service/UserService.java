@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
 
 @Transactional
 @Service
@@ -67,6 +68,10 @@ public class UserService implements UserDetailsService {
 
     public void updateUserAdreesID(Adress adress, long uid) {
         userRepoistory.updateUserAdreesID(adress, uid);
+    }
+
+    public List<User> getAllUsersWhoDoesNotSubmitSteps(LocalDate date){
+        return userRepoistory.findAllUsersWhoDoesNotSubmitStepsFromMoreThanOneDay(date);
     }
 
 

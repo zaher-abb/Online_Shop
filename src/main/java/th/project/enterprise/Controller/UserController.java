@@ -71,7 +71,7 @@ public class UserController {
         userService.creatUser(user);
         model.addAttribute("success", true);
         try {
-//           emailService.registrationConfirmationEmail(user);
+           emailService.registrationConfirmationEmail(user);
         } catch (MailException ignored) {
 
         }
@@ -102,12 +102,19 @@ public class UserController {
         model.addAttribute("steps",stepsService.getStepsSumByTeam());
         return "dashboard_test";
     }
-    @GetMapping("/userRank")
-    public String getUserRank(Model model, Principal principal){
-        User user1 = userService.findByEmail(principal.getName());
-        model.addAttribute("steps",stepsService.getStepsSumByUserInTeam(user1.getTeam().getId()));
-        return "dashboard_test";
+
+    @GetMapping("/userEmailAlert")
+    public void userEmailAlert(){
+        LocalDate date = LocalDate.now();
+        emailService.emailAlertToSubmitSteps(userService.getAllUsersWhoDoesNotSubmitSteps(date),date);
     }
+
+//    @GetMapping("/userRank")
+//    public String getUserRank(Model model, Principal principal){
+//        User user1 = userService.findByEmail(principal.getName());
+//        model.addAttribute("steps",stepsService.getStepsSumByUserInTeam(user1.getTeam().getId()));
+//        return "dashboard_test";
+//    }
 
 
 

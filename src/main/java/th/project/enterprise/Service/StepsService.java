@@ -23,7 +23,7 @@ public class StepsService {
         return stepsRepository.getStepsSumByTeam();
     }
 
-    public List<RankDTO> getStepsSumByUserInTeam(long teamId) {
-        return stepsRepository.getStepsSumByUserInTeam(teamId);
-    }
+//    public List<RankDTO> getStepsSumByUserInTeam(long teamId) {
+//        return stepsRepository.getStepsSumByUserInTeam(teamId);
+//    }
 }
