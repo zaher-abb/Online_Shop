@@ -163,3 +163,170 @@ a:hover{
         padding: 1rem;
     }
 }
+
+/* CSS BUTTON GROUPS */
+
+
+.multi-button{
+    margin-bottom: 3rem;
+}
+
+.multi-button_button{
+    font-family:"Popping",sans-serif;
+    font-size: 15px;
+    /* border: none; */
+    cursor: pointer;
+    padding: 14px 14px;
+    color: black;
+    /* transition: background 0.2s ease-in-out; */
+    /* box-shadow: 0 5px 10px #11111150;  */
+}
+
+.flexbox-buttons{
+    display:flex;
+    justify-content: center;
+}
+
+.multi-button_button:focus{
+    background-color: #8D6CFA;
+}
+
+
+.tag{
+    border-radius: 5px 0 0 5px;
+    box-shadow: 4px 6px 8px #11111150;
+}
+
+.woche{
+    box-shadow: 4px 6px 8px #11111150;
+}
+
+.monat{
+    border-radius: 0 5px 5px 0;
+    box-shadow: 4px 4px 6px #11111150;
+}
+
+/* .multi-button_button:first-child,
+.multi-button_button:last-child{
+  transition: none;
+  position: relative;
+  overflow: hidden;
+} */
+
+
+.multi-button_button:first-child::after,
+.multi-button_button:last-child::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 20%;
+    background-color: var(--complement);
+    top: 0;
+}
+
+.multi-button_button:first-child::after{
+    right: -20%;
+    border-radius: 50% 0 0 50%;
+    transition: right ease-in-out 0.2s;
+}
+
+.multi-button_button:last-child::after{
+    left: -20%;
+    border-radius: 0 50% 50% 0;
+    transition: left ease-in-out 0.2s;
+}
+
+.multi-button_button:first-child:hover::after{
+    right: 0;
+}
+
+.multi-button_button:last-child:hover::after{
+    left: 0;
+}
+
+/* CHAAART */
+
+.chart{
+    width: 600px;
+    height: 300px;
+    display: block;
+}
+
+.numbers{
+    color: black;
+    margin: 0;
+    padding: 0;
+    width: 50px;
+    height: 100%;
+    display: inline-block;
+    /* float: left; */
+}
+
+.numbers li{
+    list-style: none;
+    height: 4rem;
+    position: relative;
+    bottom: 3rem;
+}
+
+.numbers span{
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+
+.bars{
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 500px;
+    height: 300px;
+    border-left:black 1px solid;
+    border-bottom:black 1px solid;
+
+}
+
+.bars li{
+    display: table-cell;
+    width: 100px;
+    height: 300px;
+    position: relative;
+}
+
+.bars span{
+    width: 100%;
+    position: absolute;
+    bottom: -30px;
+    text-align: center;
+}
+
+.bars .bar{
+    display: block;
+    background: #D9D9D9;
+    width: 1.7rem;
+    position: absolute;
+    bottom: 0;
+    margin-left: 20px;
+    text-align: center;
+    transition: 0.5s;
+    transition-property: background, box-shadow;
+}
+
+.bars .bar:hover{
+    background: #55EFC4;
+    box-shadow: 0 0 10px 0 rgba(85, 239, 196, 0.5);
+    cursor: pointer;
+}
+
+.bars .bar:before{
+    color: #fff;
+    content: attr(data-percentage) '%';
+    position: relative;
+    bottom: 20px;
+}
+
