@@ -13,7 +13,9 @@
 <body>
 <div class="head-nav">
     <div class="logo">
-        <img class="logo-img" src="/images/logo.png" title="logo" href="/index.html">
+        <a th:href="@{/templates/addSteps.html}">
+            <img class="logo-img" src="/images/logo.png" title="logo">
+        </a>
     </div>
 </div>
 <nav>
@@ -27,29 +29,28 @@
         <li><a href="#">
             <i class="fas fa-flag"></i>
         </a></li>
-        <li><a href="/login.html">
+        <li><a th:href="@{/login.html}">
             <i class="fas fa-user-circle"></i>
         </a></li>
     </ul>
 </nav>
 <div class="container">
-    <!-- Loop through employees -->
     <div class="row">
         <div class="col-lg-12">
             <h3>Employees</h3>
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Name</th>
                     <th>Rank</th>
-                    <!-- Add more columns as needed -->
+                    <th>Team</th>
+                    <th>Steps</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="e : ${steps}">
-                    <td><span th:text="${()}">Name</span></td>
-                    <td><span th:text="${()}">Rank</span></td>
-                    <!-- Add more columns as needed -->
+                <tr th:each="s, stat : ${steps}">
+                    <td><span th:text="${stat.index + 1}">Rank</span></td>
+                    <td><span th:text="${s.teamName}">Team</span></td>
+                    <td><span th:text="${s.stepsSum}">Steps</span></td>
                 </tr>
                 </tbody>
             </table>
