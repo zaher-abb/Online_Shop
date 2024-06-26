@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequestMapping("/User")
@@ -98,8 +99,18 @@ public class UserController {
     }
 
     @GetMapping("/teamsRank")
-    public String getTeamRank(Model model){
-        model.addAttribute("steps",stepsService.getStepsSumByTeam());
+    public String getTeamRank(Model model, Principal principal){
+        List<RankDTO> teamRankList = stepsService.getStepsSumByTeam();
+
+        User user1 = userService.findByEmail(principal.getName());
+        String user1Team = user1.getTeamName();
+        for (RankDTO rankDTO : teamRankList) {
+            if (rankDTO.getTeamName().equals(user1Team)){
+                rankDTO.setVisuable(true);
+            }
+        }
+
+        model.addAttribute("steps",teamRankList);
         return "dashboard";
     }
 

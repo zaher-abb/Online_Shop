@@ -50,7 +50,7 @@
                     <tbody>
                     <tr th:each="s, stat : ${steps}">
                         <td><span th:text="${stat.index + 1}">Rank</span></td>
-                        <td><span th:text="${s.teamName}">Team</span></td>
+                        <td><span th:if="${s.visuable}" th:text="${s.teamName}">Team</span><span th:unless="${s.visuable}">----</span></td>
                         <td><span th:text="${s.stepsSum}">Steps</span></td>
                     </tr>
                     </tbody>
