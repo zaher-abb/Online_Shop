@@ -109,5 +109,13 @@ public class AdminController {
         return "redirect:/Admin/viewAdminPage";
     }
 
+    @GetMapping("/viewAdminDashboardPage")
+    public String viewAdminDashboardPage(Model model) {
+
+        model.addAttribute("steps", new Product());
+
+        return "addProduct";
+    }
+
 
 }

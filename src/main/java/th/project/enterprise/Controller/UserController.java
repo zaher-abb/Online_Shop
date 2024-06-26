@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -82,7 +81,7 @@ public class UserController {
     @GetMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
-            return "redirect:/Admin/viewAdminPage";
+            return "redirect:/User/allTeamsRank";
         }
         return "redirect:/Steps/addSteps";
     }
@@ -98,8 +97,8 @@ public class UserController {
         return "redirect:/Product/Home";
     }
 
-    @GetMapping("/teamsRank")
-    public String getTeamRank(Model model, Principal principal){
+    @GetMapping("/allTeamsRank")
+    public String allTeamsRank(Model model, Principal principal,HttpServletRequest request){
         List<RankDTO> teamRankList = stepsService.getStepsSumByTeam();
 
         User user1 = userService.findByEmail(principal.getName());
@@ -111,9 +110,28 @@ public class UserController {
         }
 
         model.addAttribute("steps",teamRankList);
+        if (request.isUserInRole("ROLE_ADMIN")) {
+            return "admin_dashboard";
+        }
         return "dashboard";
     }
+    @GetMapping("/memberRankInTeam")
+    public String memberRankInTeam(Model model, Principal principal){
 
+        User user1 = userService.findByEmail(principal.getName());
+
+        String user1Team = user1.getTeamName();
+        String user1Email = user1.getEmail();
+        List<RankDTO> teamRankList = stepsService.getStepsSumByUserInTeam(user1Team);
+
+        for (RankDTO rankDTO : teamRankList) {
+            if (rankDTO.getMemberEmail().equals(user1Email)){
+                rankDTO.setVisuable(true);
+            }
+        }
+        model.addAttribute("user",teamRankList);
+        return "team_dashboard";
+    }
     @GetMapping("/userEmailAlert")
     public void userEmailAlert(){
         LocalDate date = LocalDate.now();

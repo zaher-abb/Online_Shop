@@ -37,20 +37,20 @@
     <div class="add-steps">
         <div class="form-container">
             <form th:action="@{/User/addSteps}" th:object="${stp}" th:method="POST">
-                <h2>Team Rang </h2>
+                <h2>Team Rang fuer Admin Ansicht</h2>
                 <table>
                     <thead>
-                        <tr>
+                    <tr>
                         <th>Rank</th>
                         <th>Team</th>
-<!--                        <th>Anzahl der Teams</th>-->
+                        <!--                        <th>Anzahl der Teams</th>-->
                         <th>Anzahl der Schritte</th>
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
                     <tr th:each="s, stat : ${steps}">
                         <td><span th:text="${stat.index + 1}">Rank</span></td>
-                        <td><span th:if="${s.visuable}" th:text="${s.teamName}">Team</span><span th:unless="${s.visuable}">----</span></td>
+                        <td><span th:text="${s.teamName}">Team</span></td>
                         <td><span th:text="${s.stepsSum}">Steps</span></td>
                     </tr>
                     </tbody>

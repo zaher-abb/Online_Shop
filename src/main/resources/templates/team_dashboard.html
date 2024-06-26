@@ -42,16 +42,19 @@
                     <thead>
                         <tr>
                         <th>Rank</th>
-                        <th>Team</th>
+                        <th>Name</th>
+                            <th>Email</th>
 <!--                        <th>Anzahl der Teams</th>-->
                         <th>Anzahl der Schritte</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="s, stat : ${steps}">
+
+                    <tr th:each="u, stat : ${user}">
                         <td><span th:text="${stat.index + 1}">Rank</span></td>
-                        <td><span th:if="${s.visuable}" th:text="${s.teamName}">Team</span><span th:unless="${s.visuable}">----</span></td>
-                        <td><span th:text="${s.stepsSum}">Steps</span></td>
+                        <td><span th:text="${u.memberEmail}">Email</span></td>
+                        <td><span th:if="${s.visuable}" th:text="${u.memberName}">Name</span><span th:unless="${s.visuable}">----</span></td>
+                        <td><span th:text="${u.stepsSum}">Steps</span></td>
                     </tr>
                     </tbody>
                 </table>
