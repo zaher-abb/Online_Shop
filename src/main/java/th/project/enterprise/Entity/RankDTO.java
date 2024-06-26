@@ -13,6 +13,7 @@ public class RankDTO {
 
     private String teamName;
     private long stepsSum;
+    private int teamMemberCount;
     private String user;
 
     public RankDTO(long stepsSum,String teamName){

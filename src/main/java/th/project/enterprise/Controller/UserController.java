@@ -83,7 +83,7 @@ public class UserController {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/Admin/viewAdminPage";
         }
-        return "addSteps";
+        return "redirect:/Steps/addSteps";
     }
 
     @GetMapping("/login")
@@ -100,7 +100,7 @@ public class UserController {
     @GetMapping("/teamsRank")
     public String getTeamRank(Model model){
         model.addAttribute("steps",stepsService.getStepsSumByTeam());
-        return "dashboard_test";
+        return "dashboard";
     }
 
     @GetMapping("/userEmailAlert")

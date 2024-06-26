@@ -67,7 +67,7 @@ public class StepsController {
             stp.setUser(user1);
             stp.setDate(localDate);
             stepsService.addNewSteps(stp);
-            return "addSteps";
+            return "redirect:/User/teamsRank";
         }
     }
 }
