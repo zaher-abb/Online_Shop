@@ -40,8 +40,18 @@
                 </div>
             </div>
             <div class="inputBox inputBorder">
-                <input type="text" th:field="*{teamName}" placeholder="Team" required>
-            </div>
+                <div class="inputBox inputBorder">
+                    <select th:field="*{teamName}" required>
+                        <option value="">Gerichte </option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Brandenburg">Brandenburg</option>
+                        <option value="Potsdam">Potsdam</option>
+                        <option value="Frankfurt (Oder)">Frankfurt (Oder)</option>
+                        <option value="Cottbus">Cottbus</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <tr> </tr>
             <div class="inputBox"> 
                 <input type="submit" value="Create account"> 
             </div>
