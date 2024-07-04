@@ -54,8 +54,10 @@ public class EmailService {
 
     public void emailAlertToSubmitSteps(List<User> userList, LocalDate date) throws MailException{
         SimpleMailMessage mail = new SimpleMailMessage();
+
         for (User user : userList) {
             mail.setTo(user.getEmail());
+            System.out.println(user.getEmail());
             mail.setFrom("zaher.abb12@gmail.com");
             String text = String.format("Hallo %s Sie haben Seit 24 Stunden Ihre Schritte Anzahl nicht eingegeben, bitte Rufen sie unsere " +
                     "HomePage und geben sie Ihre Schritte ein "

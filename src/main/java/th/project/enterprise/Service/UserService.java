@@ -32,6 +32,7 @@ public class UserService implements UserDetailsService {
         userRepoistory.save(user);
     }
 
+
     public User findByEmail(String email) {
         return userRepoistory.getUserByEmail(email);
     }

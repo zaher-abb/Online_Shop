@@ -1,5 +1,6 @@
 package th.project.enterprise.Controller;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import th.project.enterprise.Entity.*;
 import th.project.enterprise.Service.*;
 
@@ -56,13 +57,12 @@ public class UserController {
 
         String teamName = user.getTeamName().toLowerCase();
 
-        if (teamService.chechTeamIsAlreadyExisted(teamName)){
+        if (teamService.chechTeamIsAlreadyExisted(teamName)) {
             Team t = teamService.getTeamByName(teamName);
             user.setTeamName(teamName);
             user.setTeam(t);
 
-        }
-        else {
+        } else {
             teamService.addNewTeam(teamName);
             Team t = teamService.getTeamByName(teamName);
             user.setTeamName(teamName);
@@ -71,7 +71,7 @@ public class UserController {
         userService.creatUser(user);
         model.addAttribute("success", true);
         try {
-           emailService.registrationConfirmationEmail(user);
+            emailService.registrationConfirmationEmail(user);
         } catch (MailException ignored) {
 
         }
@@ -98,25 +98,26 @@ public class UserController {
     }
 
     @GetMapping("/allTeamsRank")
-    public String allTeamsRank(Model model, Principal principal,HttpServletRequest request){
+    public String allTeamsRank(Model model, Principal principal, HttpServletRequest request) {
         List<RankDTO> teamRankList = stepsService.getStepsSumByTeam();
 
         User user1 = userService.findByEmail(principal.getName());
         String user1Team = user1.getTeamName();
         for (RankDTO rankDTO : teamRankList) {
-            if (rankDTO.getTeamName().equals(user1Team)){
+            if (rankDTO.getTeamName().equals(user1Team)) {
                 rankDTO.setVisuable(true);
             }
         }
 
-        model.addAttribute("steps",teamRankList);
+        model.addAttribute("steps", teamRankList);
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "admin_dashboard";
         }
         return "dashboard";
     }
+
     @GetMapping("/memberRankInTeam")
-    public String memberRankInTeam(Model model, Principal principal){
+    public String memberRankInTeam(Model model, Principal principal) {
 
         User user1 = userService.findByEmail(principal.getName());
 
@@ -125,17 +126,20 @@ public class UserController {
         List<RankDTO> teamRankList = stepsService.getStepsSumByUserInTeam(user1Team);
 
         for (RankDTO rankDTO : teamRankList) {
-            if (rankDTO.getMemberEmail().equals(user1Email)){
+            if (rankDTO.getMemberEmail().equals(user1Email)) {
                 rankDTO.setVisuable(true);
             }
         }
-        model.addAttribute("user",teamRankList);
+        model.addAttribute("user", teamRankList);
         return "team_dashboard";
     }
-    @GetMapping("/userEmailAlert")
-    public void userEmailAlert(){
+
+
+    //    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void userEmailAlert() {
         LocalDate date = LocalDate.now();
-        emailService.emailAlertToSubmitSteps(userService.getAllUsersWhoDoesNotSubmitSteps(date),date);
+        emailService.emailAlertToSubmitSteps(userService.getAllUsersWhoDoesNotSubmitSteps(date), date);
     }
 
 //    @GetMapping("/userRank")
@@ -144,10 +148,6 @@ public class UserController {
 //        model.addAttribute("steps",stepsService.getStepsSumByUserInTeam(user1.getTeam().getId()));
 //        return "dashboard_test";
 //    }
-
-
-
-
 
 
     @GetMapping("/showUserProfile")
@@ -180,7 +180,7 @@ public class UserController {
     @GetMapping("/showUpdateProfileForm")
     public String showUpdateProfileForm(Model model) {
         model.addAttribute("user", new User());
-        return "update";
+        return "mindful_profile";
     }
 
 
@@ -207,42 +207,42 @@ public class UserController {
         }
     }
 
-
-    @GetMapping("/showUpdateAdressForm")
-    public String showUpdateAdressForm(Model model) {
-
-        model.addAttribute("adr", new Adress());
-
-        return "updateAdresse";
-    }
-
-    @PostMapping("/addAdresstoUser")
-    public String addAdresstoUser(@Valid Adress adr, Principal principal, BindingResult result) {
-        if (result.hasErrors()) {
-            return "updateAdresse";
-        }
-
-        User user1 = userService.findByEmail(principal.getName());
-        if (user1 == null) {
-            return "redirect:/User/logout";
-        } else {
-            if (adressService.chechIfAdressIsAlreadyExisted(adr.getStreet(),
-                    adr.getHausNumber(),
-                    adr.getCity(),
-                    adr.getCountry(),
-                    adr.getZip())) {
-                Adress adress = adressService.getIdAressThatAlreadyexisted(adr.getStreet(),
-                        adr.getHausNumber(),
-                        adr.getCity(),
-                        adr.getCountry(),
-                        adr.getZip());
-
-                userService.updateUserAdreesID(adress, user1.getId());
-            } else {
-                adressService.addNewAdress(adr);
-                userService.updateUserAdreesID(adr, user1.getId());
-            }
-            return "redirect:/User/showUserProfile";
-        }
-    }
+//
+//    @GetMapping("/showUpdateAdressForm")
+//    public String showUpdateAdressForm(Model model) {
+//
+//        model.addAttribute("adr", new Adress());
+//
+//        return "updateAdresse";
+//    }
+//
+//    @PostMapping("/addAdresstoUser")
+//    public String addAdresstoUser(@Valid Adress adr, Principal principal, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return "updateAdresse";
+//        }
+//
+//        User user1 = userService.findByEmail(principal.getName());
+//        if (user1 == null) {
+//            return "redirect:/User/logout";
+//        } else {
+//            if (adressService.chechIfAdressIsAlreadyExisted(adr.getStreet(),
+//                    adr.getHausNumber(),
+//                    adr.getCity(),
+//                    adr.getCountry(),
+//                    adr.getZip())) {
+//                Adress adress = adressService.getIdAressThatAlreadyexisted(adr.getStreet(),
+//                        adr.getHausNumber(),
+//                        adr.getCity(),
+//                        adr.getCountry(),
+//                        adr.getZip());
+//
+//                userService.updateUserAdreesID(adress, user1.getId());
+//            } else {
+//                adressService.addNewAdress(adr);
+//                userService.updateUserAdreesID(adr, user1.getId());
+//            }
+//            return "redirect:/User/showUserProfile";
+//        }
+//    }
 }

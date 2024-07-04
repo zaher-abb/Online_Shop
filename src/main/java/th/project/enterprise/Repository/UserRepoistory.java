@@ -23,7 +23,7 @@ public interface UserRepoistory extends CrudRepository<User, Long> {
     @Query("SELECT SUM(s.steps_number) FROM Steps s WHERE s.user.id= :userId AND s.date BETWEEN :startDate AND :endDate")
     int getUSerStepsByDifference(long userId, LocalDate startDate, LocalDate endDate);
 
-    @Query("SELECT u FROM User u WHERE u.id NOT IN (SELECT s.user.id FROM Steps s WHERE s.date <= :date)")
+    @Query("SELECT u FROM User u left join Steps s on u.id = s.user.id WHERE s.date < :date")
     List<User> findAllUsersWhoDoesNotSubmitStepsFromMoreThanOneDay(LocalDate date);
 
 }

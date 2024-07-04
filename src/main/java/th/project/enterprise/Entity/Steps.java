@@ -1,6 +1,9 @@
 package th.project.enterprise.Entity;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.time.LocalDate;
 import javax.persistence.*;
 
@@ -20,7 +23,7 @@ public class Steps {
     private String stringDate;
     private LocalDate date;
 
-
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

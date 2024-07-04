@@ -26,4 +26,5 @@ public class StepsService {
     public List<RankDTO> getStepsSumByUserInTeam(String teamName) {
         return stepsRepository.getStepsSumByUserInTeam(teamName);
     }
+
 }
