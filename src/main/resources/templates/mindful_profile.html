@@ -36,21 +36,21 @@
 
         </ul>
     </nav>
-    
+
     <section>
         <div class="profile"> 
             <div class="content"> 
                 <div class="form">
-                    <form th:action="@{/User/updateUser}" th:object="${user}" th:method="POST">
+                    <form th:action="@{/User/updateUser}" th:object="${user}" th:method="POST" enctype="multipart/form-data" >
                         <div class="upload">
                             <img src="/images/noprofil.jpg" width = 100 height = 100 alt="">
                             <div class="round">
-                              <input type="file">
+                                <input type="file" name="image" accept="image/png, image/jpg , image/jpeg" class="custom-file-input"
+                                        id="customFile" required >
                               <i class = "fa fa-plus" style = "color: #606060"></i>
                             </div>
                           </div>
-                          <div class="links"> <a href="#">Edit Profile</a> </div> 
-
+                          <div class="links"> <a href="#">Edit Profile</a> </div>
 
                           <div class="content"> 
                             <div class="form"> 
@@ -80,8 +80,13 @@
 
                                 <div class="inputBox-Password inputBorder">
                                     <input type="password" name="password" th:field="*{password}" required>
-                                </div>  
+                                </div>
+
+                                <div class="d-flex justify-content-center mt-3 login_container">
+                                    <input class="btn login_btn"  type="submit" value="save">
+                                </div>
                         </div>
+                          </div>
                     </form>
 
                 </div> 

@@ -41,6 +41,10 @@ public class User {
     @Size(min = 4)
     private String password;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String profilePictureUrl;
+
 
     @NotNull
     @Column(nullable = false, unique = true)

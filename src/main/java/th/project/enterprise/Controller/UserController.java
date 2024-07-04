@@ -1,6 +1,9 @@
 package th.project.enterprise.Controller;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import th.project.enterprise.Entity.*;
 import th.project.enterprise.Service.*;
 
@@ -15,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/User")
@@ -185,7 +191,7 @@ public class UserController {
 
 
     @PostMapping("/updateUser")
-    public String updateUser(@Valid User user, Principal principal, BindingResult result, Model model) {
+    public String updateUser(@Param("image") MultipartFile image,  @Valid User user, Principal principal, BindingResult result, Model model) throws IOException {
         if (result.hasErrors()) {
             return "update";
         }
@@ -194,27 +200,47 @@ public class UserController {
             return "update";
         }
         User user1 = userService.findByEmail(principal.getName());
+        model.addAttribute("user1", user1);
         if (user1 == null) {
             return "redirect:/User/logout";
         } else {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+            user1.setProfilePictureUrl("/images/" + fileName);
+
+            String rootDir = System.getProperty("user.dir");
+            String uploadDir = rootDir + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "images";
+//            String uploadDir = "C:\\Users\\zaher\\IntelliJ_EE_Projecte\\enterprise\\src\\main\\resources\\static\\images";
+            System.out.println(uploadDir);
+            FileUploader.saveFile(uploadDir, fileName, image);
             user1.setFirstName(user.getFirstName());
             user1.setLastName(user.getLastName());
             user1.setPassword(user.getPassword());
             userService.creatUser(user1);
             model.addAttribute("success", true);
 
-            return "redirect:/User/showUserProfile";
+            return "redirect:/User/showProfileDetails";
         }
     }
 
+//    @PostMapping("/AddProduct")
+//    public String uploadFile(@Param("image") MultipartFile image, Product p) throws IOException {
+//        String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
+//        p.setPictureUrl("/images/" + fileName);
+//        String uploadDir = "C:\\Users\\zaher\\IntelliJ_EE_Projecte\\enterprise\\src\\main\\resources\\static\\images";
 //
-//    @GetMapping("/showUpdateAdressForm")
-//    public String showUpdateAdressForm(Model model) {
-//
-//        model.addAttribute("adr", new Adress());
-//
-//        return "updateAdresse";
+//        FileUploader.saveFile(uploadDir, fileName, image);
+//        productService.addProduct(p);
+//        return "redirect:/Admin/viewAdminPage";
 //    }
+
+
+    @GetMapping("/showProfileDetails")
+    public String showProfileDetails(Model model) {
+
+        model.addAttribute("user", new User());
+
+        return "profileDetails";
+    }
 //
 //    @PostMapping("/addAdresstoUser")
 //    public String addAdresstoUser(@Valid Adress adr, Principal principal, BindingResult result) {
