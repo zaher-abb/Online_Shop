@@ -141,8 +141,8 @@ public class UserController {
     }
 
 
-    //    @Scheduled(cron = "0 0/2 * * * ?")
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0/2 * * * ?")
+//    @Scheduled(cron = "0 0 0 * * ?")
     public void userEmailAlert() {
         LocalDate date = LocalDate.now();
         emailService.emailAlertToSubmitSteps(userService.getAllUsersWhoDoesNotSubmitSteps(date), date);
@@ -184,9 +184,13 @@ public class UserController {
     }
 
     @GetMapping("/showUpdateProfileForm")
-    public String showUpdateProfileForm(Model model) {
+    public String showUpdateProfileForm(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
-        return "mindful_profile";
+//        if (request.isUserInRole("ROLE_ADMIN")) {
+//            return "admin_dashboard";
+//        }
+        return "profile";
+
     }
 
 
@@ -215,6 +219,7 @@ public class UserController {
             user1.setFirstName(user.getFirstName());
             user1.setLastName(user.getLastName());
             user1.setPassword(user.getPassword());
+            user1.setStepsTarget(user.getStepsTarget());
             userService.creatUser(user1);
             model.addAttribute("success", true);
 
