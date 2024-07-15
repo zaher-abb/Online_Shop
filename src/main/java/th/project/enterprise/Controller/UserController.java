@@ -132,17 +132,19 @@ public class UserController {
         List<RankDTO> teamRankList = stepsService.getStepsSumByUserInTeam(user1Team);
 
         for (RankDTO rankDTO : teamRankList) {
+            System.out.println(rankDTO.toString());
             if (rankDTO.getMemberEmail().equals(user1Email)) {
                 rankDTO.setVisuable(true);
             }
         }
-        model.addAttribute("user", teamRankList);
+
+        model.addAttribute("users", teamRankList);
         return "team_dashboard";
     }
 
 
-    @Scheduled(cron = "0 0/2 * * * ?")
-//    @Scheduled(cron = "0 0 0 * * ?")
+ //   @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void userEmailAlert() {
         LocalDate date = LocalDate.now();
         emailService.emailAlertToSubmitSteps(userService.getAllUsersWhoDoesNotSubmitSteps(date), date);

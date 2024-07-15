@@ -26,8 +26,8 @@ public class RankDTO {
 
         this.isVisuable= false;
     }
-    public RankDTO(String memberName, long stepsSum,String memberEmail){
-        this.memberName = memberName;
+    public RankDTO(String firstName, String lastName,  long stepsSum, String memberEmail){
+        this.memberName = firstName + " " + lastName;
         this.stepsSum = stepsSum;
         this.memberEmail = memberEmail;
         this.isVisuable= false;
